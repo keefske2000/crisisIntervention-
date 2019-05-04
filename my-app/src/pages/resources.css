@@ -1,0 +1,7 @@
+.card-deck {
+    display: grid;
+    /* height: 200px; */
+    grid-template-rows: 120px 1fr 65px;
+    grid-template-columns: 1fr;
+    justify-self: center;
+}

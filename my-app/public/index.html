@@ -5,7 +5,98 @@
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <script type="text/javascript" src="node_modules/auth0-js/build/auth0.js"></script>
+    <link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+<script src="http://fb.me/react-0.8.0.js"></script>
+<script src="http://fb.me/JSXTransformer-0.8.0.js"></script>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="node_modules/auth0-js/build/auth0.js">
+     
+     var webAuth = new auth0.WebAuth({
+        domain:       'dev-tpi-qh0d.auth0.com',
+        clientID:     'nnhMtDX7rq9gYfZBsYKpiZIsR3wJA5SH'
+           });
+  
+        webAuth.logout({
+        returnTo: 'localhost:3000/',
+        client_id: 'nnhMtDX7rq9gYfZBsYKpiZIsR3wJA5SH'
+            });
+
+            document.body.style.display = 'none';
+
+// instantiate Lock
+var lock = new Auth0Lock('nnhMtDX7rq9gYfZBsYKpiZIsR3wJA5SH', 'dev-tpi-qh0d.auth0.com', {
+  auth: {
+    sso: false},
+    params: {
+      scope: 'openid name picture'
+    }
+
+});
+var auth0 = new Auth0({
+  domain: 'dev-tpi-qh0d.auth0.com',
+  clientID: 'nnhMtDX7rq9gYfZBsYKpiZIsR3wJA5SH',
+  callbackOnLocationHash: true
+});
+
+// Handle authenticated event to store ID Token in localStorage
+lock.on("authenticated", function (authResult) {
+  isAuthCallback = true;
+
+  lock.getProfile(authResult.idToken, function (error, profile) {
+    if (error) {
+      // Handle error
+      return;
+    }
+
+    localStorage.setItem('userToken', authResult.idToken);
+
+    goToHomepage(authResult.state, authResult.idToken);
+    return;
+  });
+});
+
+var isAuthCallback = false;
+
+// Get the user token if we've saved it in localStorage before
+var idToken = localStorage.getItem('userToken');
+if (idToken) {
+  // This would go to a different route like
+  // window.location.href = '#home';
+  // But in this case, we just hide and show things
+  goToHomepage(getQueryParameter('targetUrl'), idToken);
+  return;
+} else {
+  // user is not logged, check whether there is an SSO session or not
+  auth0.getSSOData(function (err, data) {
+    if (!isAuthCallback && !err && data.sso) {
+      // there is! redirect to Auth0 for SSO
+      auth0.signin({
+        connection: data.lastUsedConnection.name,
+        scope: 'openid name picture',
+        state: getQueryParameter('targetUrl')
+      });
+    } else {
+      // regular login
+      document.body.style.display = 'inline';
+    }
+  });
+}
+
+// Showing Login
+$('.btn-login').click(function (e) {
+  e.preventDefault();
+  lock.show();
+});
+
+    </script>
+    
+    </script>
     <script src="https://cdn.auth0.com/js/auth0/9.10/auth0.min.js"></script>
     <!--
       manifest.json provides metadata used when your web app is installed on a
