@@ -1,220 +1,199 @@
-import React from "react";
 
-/** @jsx React.DOM */
-function Contact() {
-var STATES = [
-    'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI',
-    'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS',
-    'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR',
-    'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
-  ]
-  
-  var Example = React.createClass({
-    getInitialState: function() {
-      return {
-        email: true
-      , question: true
-      , submitted: null
+import React, { Component } from 'react';
+import $ from 'jquery';
+import Recaptcha from 'react-google-recaptcha';
+import Contact from "../components/Contact";
+
+export default class ContactPage extends Component {
+  state = {
+    inputEmail: '',
+    inputCheckBoth: false,
+    inputCheckDesign: false,
+    inputCheckDev: false,
+    inputMessage: '',
+    inputName: '',
+    isCaptchaValid: false,
+    isErrorShown: false,
+    isFormValid: false
+  }
+
+  // Handle visitor's interaction with inputs
+  handleInput = event => {
+    // Test for input and length of the value
+    if (event.target.value.length > 0 && event.target.name !== 'inputEmail') {
+      this.setState({
+        [event.target.name]: event.target.value
+      })
+    }
+
+    // If input is for email address validate it with regexp
+    if (event.target.name === 'inputEmail') {
+      // eslint-disable-next-line
+      const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+      if (reg.test(String(event.target.value).toLowerCase())) {
+        this.setState({
+          [event.target.name]: event.target.value
+        })
       }
     }
-  
-  , render: function() {
-      var submitted
-      if (this.state.submitted !== null) {
-        submitted = <div className="alert alert-success">
-          <p>ContactForm data:</p>
-          <pre><code>{JSON.stringify(this.state.submitted, null, '  ')}</code></pre>
-        </div>
-      }
-  
-      return <div>
-        <div className="panel panel-default">
-          <div className="panel-heading clearfix">
-            <h3 className="panel-title pull-left">Contact Form</h3>
-            <div className="pull-right">
-              <label className="checkbox-inline">
-                <input type="checkbox"
-                  checked={this.state.email}
-                  onChange={this.handleChange.bind(this, 'email')}
-                /> Email
-              </label>
-              <label className="checkbox-inline">
-                <input type="checkbox"
-                  checked={this.state.question}
-                  onChange={this.handleChange.bind(this, 'question')}
-                /> Question
-              </label>
+  }
+
+  // Handle visitor's interaction with checkboxes
+  handleCheckbox = event => {
+    this.setState({
+      [event.target.name]: event.target.checked
+    })
+  }
+
+  // Show message in console when reCaptcha plugin is loaded
+  onCaptchaLoad = () => {
+    console.log('Captcha loaded')
+  }
+
+  // Update state after reCaptcha validates visitor
+  onCaptchaVerify = (response) => {
+    this.setState({
+      isCaptchaValid: true
+    })
+  }
+
+  handleFormSubmit = event => {
+    event.preventDefault()
+
+    // Test
+    if (this.state.inputEmail.length > 0 && this.state.inputName.length > 0 && this.state.inputMessage.length > 0 && this.state.isCaptchaValid) {
+      this.setState({
+        isErrorShown: false,
+        isFormValid: true
+      })
+
+      // Send the form with AJAX
+      $.ajax({
+        data: this.state,
+        type: 'POST',
+        url: 'contact@justifyeye.com',
+        success: function(data) {
+          console.info(data)
+        },
+        error: function(xhr, status, err) {
+          console.error(status, err.toString())
+        }
+      })
+
+      // Reset state after sending the form
+      this.setState({
+        inputEmail: '',
+        inputCheckBoth: false,
+        inputCheckDesign: false,
+        inputCheckDev: false,
+        inputMessage: '',
+        inputName: '',
+        isCaptchaValid: false,
+        isErrorShown: false,
+        isFormValid: false
+      })
+    } else {
+      // Show error message
+      this.setState({
+        isErrorShown: true
+      })
+    }
+  }
+
+  render() {
+    return (
+      <Contact backgroundImage="">
+      <div className="contact-page">
+        
+        <h2>Contact us for additional support.</h2>
+
+        <h3>Contact me for any additional supports or advise in the area of your crisis, and I will help you to the best of my ability.</h3>
+        
+        <form action="">
+          <fieldset>
+            <label htmlFor="inputName">Name</label>
+
+            <input onChange={this.handleInput} type="text" name="inputName" id="inputName" required={true} />
+          </fieldset>
+
+          <fieldset>
+            <label htmlFor="inputEmail">Email</label>
+
+            <input onChange={this.handleInput} type="email" name="inputEmail" id="inputEmail" required={true} />
+          </fieldset>
+
+          <div className="form__row">
+            <div className="form__col">
+              <fieldset>
+                <label htmlFor="inputCheckDesign">
+                  <input onClick={this.handleCheckbox} type="checkbox" name="inputCheckDesign" id="inputCheckDesign" defaultChecked={false} />
+
+                  <span>Questions</span>
+                </label>
+              </fieldset>
+            </div>
+
+            <div className="form__col">
+              <fieldset>
+                <label htmlFor="inputCheckDev">
+                  <input onClick={this.handleCheckbox} type="checkbox" name="inputCheckDev" id="inputCheckDev" defaultChecked={false} />
+
+                  <span>Answers/experiences that can help others</span>
+                </label>
+              </fieldset>
+            </div>
+
+            <div className="form__col">
+              <fieldset>
+                <label htmlFor="inputCheckBoth">
+                  <input onClick={this.handleCheckbox} type="checkbox" name="inputCheckBoth" id="inputCheckBoth" defaultChecked={false} />
+
+                  <span>Donation info</span>
+                </label>
+              </fieldset>
             </div>
           </div>
-          <div className="panel-body">
-            <ContactForm ref="contactForm"
-              email={this.state.email}
-              question={this.state.question}
-              company={this.props.company}
+
+          <fieldset>
+            <label>message</label>
+
+            <textarea onChange={this.handleInput} name="inputMessage" id="inputMessage" required={true} />
+          </fieldset>
+
+          {/* !! */}
+          {/* Make sure to use your 'sitekey' for Google reCaptcha API! */}
+          {/* !! */}
+          <fieldset>
+            <Recaptcha
+              onloadCallback={this.onCaptchaLoad}
+              sitekey="xxxxxxxxxxxxxxx"
+              render="explicit"
+              verifyCallback={this.onCaptchaVerify}
             />
-          </div>
-          <div className="panel-footer">
-            <button type="button" className="btn btn-primary btn-block" onClick={this.handleSubmit}>Submit</button>
-          </div>
-        </div>
-        {submitted}
+          </fieldset>
+
+          {this.state.isFormSubmitted && (
+            <fieldset>
+              <p>Thank you for contacting me. I will reply in four days.</p>
+            </fieldset>
+          )}
+
+          {this.state.isErrorShown && (
+            <fieldset>
+              <p>Please, make sure to fill all fields.</p>
+            </fieldset>
+          )}
+
+          <fieldset>
+            <button onClick={this.handleFormSubmit} className="btn">
+              Send
+            </button>
+          </fieldset>
+        </form>
+        
       </div>
-    }
-  
-  , handleChange: function(field, e) {
-      var nextState = {}
-      nextState[field] = e.target.checked
-      this.setState(nextState)
-    }
-  
-  , handleSubmit: function() {
-      if (this.refs.contactForm.isValid()) {
-        this.setState({submitted: this.refs.contactForm.getFormData()})
-      }
-    }
-  })
-  
-  /**
-   * A contact form with certain optional fields.
-   */
-  var ContactForm = React.createClass({
-    getDefaultProps: function() {
-      return {
-        email: true
-      , question: false
-      }
-    }
-  
-  , getInitialState: function() {
-      return {errors: {}}
-    }
-  
-  , isValid: function() {
-      var fields = ['firstName', 'lastName', 'phoneNumber', 'address', 'city', 'state', 'zipCode']
-      if (this.props.email) fields.push('email')
-      if (this.props.question) fields.push('question')
-  
-      var errors = {}
-      fields.forEach(function(field) {
-        var value = trim(this.refs[field].getDOMNode().value)
-        if (!value) {
-          errors[field] = 'This field is required'
-        }
-      }.bind(this))
-      this.setState({errors: errors})
-  
-      var isValid = true
-      // eslint-disable-next-line no-unused-vars
-      for (var error in errors) {
-        isValid = false
-        break
-      }
-      return isValid
-    }
-  
-  , getFormData: function() {
-      var data = {
-        firstName: this.refs.firstName.getDOMNode().value
-      , lastName: this.refs.lastName.getDOMNode().value
-      , phoneNumber: this.refs.phoneNumber.getDOMNode().value
-      , address: this.refs.address.getDOMNode().value
-      , city: this.refs.city.getDOMNode().value
-      , state: this.refs.state.getDOMNode().value
-      , zipCode: this.refs.zipCode.getDOMNode().value
-      , currentCustomer: this.refs.currentCustomerYes.getDOMNode().checked
-      }
-      if (this.props.email) data.email = this.refs.email.getDOMNode().value
-      if (this.props.question) data.question = this.refs.question.getDOMNode().value
-      return data
-    }
-  
-  , render: function() {
-      return <div className="form-horizontal">
-        {this.renderTextInput('firstName', 'First Name')}
-        {this.renderTextInput('lastName', 'Last Name')}
-        {this.renderTextInput('phoneNumber', 'Phone number')}
-        {this.props.email && this.renderTextInput('email', 'Email')}
-        {this.props.question && this.renderTextarea('question', 'Question')}
-        {this.renderTextInput('address', 'Address')}
-        {this.renderTextInput('city', 'City')}
-        {this.renderSelect('state', 'State', STATES)}
-        {this.renderTextInput('zipCode', 'Zip Code')}
-        {this.renderRadioInlines('currentCustomer', 'Are you currently a ' + this.props.company + ' Customer?', {
-          values: ['Yes', 'No']
-        , defaultCheckedValue: 'No'
-        })}
-      </div>
-    }
-  
-  , renderTextInput: function(id, label) {
-      return this.renderField(id, label,
-        <input type="text" className="form-control" id={id} ref={id}/>
-      )
-    }
-  
-  , renderTextarea: function(id, label) {
-      return this.renderField(id, label,
-        <textarea className="form-control" id={id} ref={id}/>
-      )
-    }
-  
-  , renderSelect: function(id, label, values) {
-      var options = values.map(function(value) {
-        return <option value={value}>{value}</option>
-      })
-      return this.renderField(id, label,
-        <select className="form-control" id={id} ref={id}>
-          {options}
-        </select>
-      )
-    }
-  
-  , renderRadioInlines: function(id, label, kwargs) {
-      var radios = kwargs.values.map(function(value) {
-        var defaultChecked = (value === kwargs.defaultCheckedValue)
-        return <label className="radio-inline">
-          <input type="radio" ref={id + value} name={id} value={value} defaultChecked={defaultChecked}/>
-          {value}
-        </label>
-      })
-      return this.renderField(id, label, radios)
-    }
-  
-  , renderField: function(id, label, field) {
-      return <div className={$c('form-group', {'has-error': id in this.state.errors})}>
-        <label htmlFor={id} className="col-sm-4 control-label">{label}</label>
-        <div className="col-sm-6">
-          {field}
-        </div>
-      </div>
-    }
-  })
-  
-  React.renderComponent(<Example company="FakeCo"/>, document.getElementById('contactform'))
-  
-  // Utils
-  
-  var trim = function() {
-    var TRIM_RE = /^\s+|\s+$/g
-    return function trim(string) {
-      return string.replace(TRIM_RE, '')
-    }
-  }()
-  
-  function $c(staticClassName, conditionalClassNames) {
-    var classNames = []
-    if (typeof conditionalClassNames == 'undefined') {
-      conditionalClassNames = staticClassName
-    }
-    else {
-      classNames.push(staticClassName)
-    }
-    for (var className in conditionalClassNames) {
-      if (!!conditionalClassNames[className]) {
-        classNames.push(className)
-      }
-    }
-    return classNames.join(' ')
+      </Contact>
+    )
   }
 }
-  export default Contact;

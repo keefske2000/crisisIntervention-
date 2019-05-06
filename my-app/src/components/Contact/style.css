@@ -1,0 +1,38 @@
+.contact {
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .contact-page{
+
+    box-sizing: border-box;
+    position: center center;
+    margin: auto;
+    padding: 10px;
+    height: 200px;
+    width: 50%;
+  }
+  
+  .btn{
+  
+    color:red;
+    font-size: 25px;
+  }
+
+  h2{
+      font-size: 50px;
+  }
+  h3{
+      font-size: 25px;
+  }
+  fieldset{
+      margin: 10px;
+      position: center;
+  }
+  textarea {
+        height: 200px;
+        width: 500px;
+  }
+  
