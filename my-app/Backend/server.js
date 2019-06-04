@@ -12,7 +12,7 @@ const router = express.Router();
 
 // this is our MongoDB database
 const dbRoute =
-  'mongodb://jelo:password1@ds249583.mlab.com:49583/fullstack_app';
+  'mongodb://<dbuser>:<dbpassword>@ds131747.mlab.com:31747/heroku_0xtfsq1g';
 
 // connects our back end code with the database
 mongoose.connect(dbRoute, { useNewUrlParser: true });
