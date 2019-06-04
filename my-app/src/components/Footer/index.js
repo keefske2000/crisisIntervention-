@@ -4,7 +4,7 @@ import "./style.css";
 function Footer() {
   return (
     <footer className="footer">
-      <span>&#169; Crisis Assessment Tool 2019</span>
+      <span>Copyright &#169; Crisis Assessment Tool 2019, All Rights Reserverd</span>
     </footer>
   );
 }

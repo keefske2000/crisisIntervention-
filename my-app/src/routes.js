@@ -6,7 +6,12 @@ import Callback from './Callback/Callback';
 import Auth from './Auth/Auth';
 import history from './history';
 
+
+
+
 const auth = new Auth();
+
+
 
 const handleAuthentication = (nextState, replace) => {
   if (/access_token|id_token|error/.test(nextState.location.hash)) {

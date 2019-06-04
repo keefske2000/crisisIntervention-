@@ -12,11 +12,11 @@ import Wrapper from "./components/Wrapper";
 
 // import logo from './logo.svg';
 import './App.css';
-// import Auth from './Auth/Auth.js';
-// import Callback from './Callback/Callback';
+import Auth from './Auth/Auth.js';
+// import './Callback';
 import { Button } from 'react-bootstrap';
 import React, { Component } from 'react';
-import './routes';
+// import './routes';
 
 
 
@@ -39,9 +39,15 @@ function App() {
   );
 }
 
+
 // const auth = new Auth();
 // auth.login();
 
+// var options = {
+//   auth: {
+//     redirectUrl: 'http://localhost:3000/about'
+//   }
+// };
 
 // class Login extends Component {
 //   goTo(route) {
@@ -114,31 +120,5 @@ function App() {
 
 
 export default App;
-
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
 
 

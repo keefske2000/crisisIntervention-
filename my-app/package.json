@@ -7,12 +7,15 @@
     "bootstrap": "^4.3.1",
     "create-react-class": "^15.6.3",
     "jquery": "^3.4.1",
+    "materialize-css": "^1.0.0-rc.2",
+    "node": "^12.2.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
     "react-google-recaptcha": "^1.0.5",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.0"
+    "react-scripts": "3.0.0",
+    "survey-react": "^1.0.85"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,6 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:5000/",
   "eslintConfig": {
     "extends": "react-app"
   },

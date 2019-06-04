@@ -65,7 +65,7 @@ function Resource(){
   </Card>
   <Card>
       <a href="https://www.pparx.org/">
-    <Card.Img variant="top" src="https://www.pparx.org/sites/default/files/ppa-logo_2_0.png" />
+    <Card.Img variant="top" src="https://medicineassistancetool.org/-/media/Project/PhRMA/Medicine-Assistance-Tool/Global/Images/MAT-header.svg" />
     </a>
     <Card.Body>
       <Card.Title></Card.Title>
@@ -84,7 +84,7 @@ function Resource(){
     <Card.Body>
       <Card.Title></Card.Title>
       <Card.Text>
-      Mobile crisis services teams respond to adults throughout the District who are experiencing a psychiatric crisis whether in the homes or on the street and who are unable or unwilling to travel to receive mental health services. Clinicians also are available to provide counseling support after traumatic events whether personal or community wide.
+      The National Suicide Prevention Lifeline provides free and confidential emotional support to people in suicidal crisis or emotional distress 24 hours a day, 7 days a week, across the United States. The Lifeline is comprised of a national network of over 150 local crisis centers, combining custom local care and resources with national standards and best practices.
       </Card.Text>
     </Card.Body>
     <Card.Footer>

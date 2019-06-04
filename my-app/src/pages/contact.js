@@ -72,7 +72,7 @@ export default class ContactPage extends Component {
       $.ajax({
         data: this.state,
         type: 'POST',
-        url: 'contact@justifyeye.com',
+        url: '/mailer.php',
         success: function(data) {
           console.info(data)
         },
@@ -106,9 +106,9 @@ export default class ContactPage extends Component {
       <Contact backgroundImage="">
       <div className="contact-page">
         
-        <h2>Contact us for additional support.</h2>
+        
 
-        <h3>Contact me for any additional supports or advise in the area of your crisis, and I will help you to the best of my ability.</h3>
+        <h3>Contact me for any additional supports or professional advise in the area of your crisis, and I will help you to the best of my ability.</h3>
         
         <form action="">
           <fieldset>

@@ -11,6 +11,7 @@
   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
   crossorigin="anonymous"
 />
+<script src="https://surveyjs.azureedge.net/1.0.85/survey.react.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 <script src="http://fb.me/react-0.8.0.js"></script>
 <script src="http://fb.me/JSXTransformer-0.8.0.js"></script>
@@ -33,7 +34,7 @@
 // instantiate Lock
 var lock = new Auth0Lock('nnhMtDX7rq9gYfZBsYKpiZIsR3wJA5SH', 'dev-tpi-qh0d.auth0.com', {
   auth: {
-    sso: false},
+    sso: true},
     params: {
       scope: 'openid name picture'
     }
