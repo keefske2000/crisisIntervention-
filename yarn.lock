@@ -6525,10 +6525,10 @@ node-releases@^1.1.14:
   dependencies:
     semver "^5.3.0"
 
-node@^12.2.0:
-  version "12.2.0"
-  resolved "https://registry.yarnpkg.com/node/-/node-12.2.0.tgz#1c56b40d2bf1ba09683c1350317ae186a4b4c9e9"
-  integrity sha512-fW3R9dLW/R6MImarR8ETTKaeSAcECYcB0NL6xR4/K05h2M3M5t1Sf6hfMaIYr8mDBgTHwDvYxiwUA0RALWuwMQ==
+"node@^10.15.0cd ..":
+  version "10.16.0"
+  resolved "https://registry.yarnpkg.com/node/-/node-10.16.0.tgz#75b63de01b157470c604f434431bf6b7303389de"
+  integrity sha512-6phFAHRWG1aQWp7AGj5zzBTB6b4re4tAJaW0ScxdwWqdPyEEn+DkfcgMxRJk9zbbE59SXBoX/LUHF/52ts9htQ==
   dependencies:
     node-bin-setup "^1.0.0"
 
