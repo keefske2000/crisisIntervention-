@@ -6,7 +6,7 @@
     "auth0-js": "^9.10.2",
     "bootstrap": "^4.3.1",
     "create-react-class": "^15.6.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "materialize-css": "^1.0.0-rc.2",
     "node": "^10.15.0cd ..",
     "react": "^16.8.6",
